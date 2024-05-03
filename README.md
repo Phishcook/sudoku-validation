@@ -7,7 +7,13 @@
 
 ### Validating a Sudoku Plus
 There are two methods for validating a Sudoku Plus with this application.
-1) `POST api/sudoku/validate` passing data binary for the CSV
+1) `POST api/sudoku/validate` passing data file for the CSV. Use the following cURL as an example:
+
+```
+    curl --location 'http://127.0.0.1:8000/api/sudoku/validate' \
+   --header 'Content-Type: text/csv' \
+   --data '@/path/to/file.csv'
+```
 2) Run the command `bin/console app:validate:sudoku [path/to/file.csv]`
 
 The response/output will be JSON with the following body:
@@ -50,3 +56,7 @@ but is not limited to:
 1) Add Unit Tests, specifically for Validation, CSV Reader. Unit tests are great for smaller classes, and keep your classes small
 2) Add docker files to remove "Well it works on my machine!!"
 3) CI/CD support, specifically for automated test runs of behat/PHPUnit suite
+4) Build out some of Symfony's built-in tools and extended libraries! There are a few bundles to support Rest APIs,
+API docs, request validation
+5) Rate limit and security! Right now we have no auth layer nor anything to inhibit excessive requests. This leaves
+the application open to exploitation or abuse!
