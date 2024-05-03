@@ -15,8 +15,9 @@ Feature:
       |  features/files/invalid_character.csv      |  '{"valid":false,"message":"CSV contains a non integer"}'   |
       |  features/files/not_sudoku_plus_size.csv   |  '{"valid":false,"message":"Not a valid Sudoku Plus grid"}'   |
       |  features/files/valid_4x4.csv              |  '{"valid":true,"message":null}'   |
+      |  features/files/out_of_bounds.csv          |  '{"valid":false,"message":"CSV contains an integer that is out of bounds!"}'   |
 
-  Scenario Outline: A Sudoku Plus CSV is validated via Symfony Command
+  Scenario Outline: A Sudoku Plus CSV is validated via API
     When I make an api call to sudoku validation api with file from "<csv_path>"
     Then the response code should be "<response_code>"
     And the response should be <response_body>
@@ -28,6 +29,7 @@ Feature:
       |  features/files/duplicate_row.csv         |  200  |  '{"valid":false,"message":"Sudoku Row contains a duplicate"}'   |
       |  features/files/duplicate_subgrid.csv     |  200  |  '{"valid":false,"message":"Sudoku Sub-grid contains a duplicate"}'   |
       |  features/files/incomplete.csv            |  200  |  '{"valid":false,"message":"Incomplete Puzzle"}'   |
-      |  features/files/invalid_character.csv     |  400  |  'The file provided is not a valid CSV'   |
+      |  features/files/invalid_character.csv     |  200  |  '{"valid":false,"message":"CSV contains a non integer"}'   |
       |  features/files/not_sudoku_plus_size.csv  |  200  |  '{"valid":false,"message":"Not a valid Sudoku Plus grid"}'   |
       |  features/files/valid_4x4.csv             |  200  |  '{"valid":true,"message":null}'   |
+      |  features/files/out_of_bounds.csv         |  200  |  '{"valid":false,"message":"CSV contains an integer that is out of bounds!"}'   |

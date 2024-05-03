@@ -48,10 +48,18 @@ class SudokuGrid
 
         return $grids;
     }
+
+    /**
+     * @return array<array<int>>
+     */
     public function getRows(): array
     {
         return $this->fields;
     }
+
+    /**
+     * @return array<array<int>>
+     */
     public function getColumns(): array
     {
         $columns = [];

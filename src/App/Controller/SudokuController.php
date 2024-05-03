@@ -23,7 +23,6 @@ class SudokuController extends AbstractController
     )]
     public function upload(Request $request, ValidateSudokuPlus $validateCSV): Response
     {
-//        dd($request);
         $file = $request->getContent(true);
 
         if (!is_resource($file)) {

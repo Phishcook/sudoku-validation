@@ -4,6 +4,10 @@ namespace Domain\Action;
 
 use Domain\Exception\InvalidSudokuException;
 
+/**
+ * Validates a CSV to be a properly solved Sudoku Plus puzzle. Accepts a filePath to the CSV and will
+ * throw an exception back to the caller if the submission is invalid.
+ */
 class ValidateSudokuPlus
 {
     public function __construct(private readonly CreateSudokuGridFromCSV $createSudokuGrid)

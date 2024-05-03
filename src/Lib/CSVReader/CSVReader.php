@@ -4,12 +4,14 @@ namespace Lib\CSVReader;
 
 use Lib\CSVReader\Exception\MalformedCSVException;
 
+/**
+ * CSVReader generates an iterator from a CSV filePath.
+ */
 class CSVReader implements \Iterator
 {
 
     public static function createFromFilePath(
         string $filePath,
-        string $delimiter = "\n",
         ?string $separator = ','
     ): CSVReader {
         $file = fopen($filePath, 'r');
@@ -17,13 +19,8 @@ class CSVReader implements \Iterator
             throw new MalformedCSVException(sprintf("Could not read file %s", $filePath));
         }
 
-        return new self($file, $delimiter, $separator);
+        return new self($file, $separator);
     }
-
-    private $rowDelimiter;
-
-    /* @var resource|null */
-    private $fileHandle = null;
 
     private int $position = 0;
 
@@ -31,26 +28,15 @@ class CSVReader implements \Iterator
     private array $data = [];
 
     /*  @var array<string, string> $header */
-    private array $header = [];
 
     /**
      * @param resource $file
      */
     public function __construct(
         private $file,
-        private readonly string $delimiter = "\n",
         private readonly string $separator = ',',
-        bool $hasHeader = false
     ) {
-        if ($hasHeader) {
-            $header = fgetcsv($this->file, 0, $this->separator);
-            if ($header !== false) {
-                $this->position++;
-                $this->header = $header;
-            } else {
-                throw new \Exception("Missing Header");
-            }
-        }
+
     }
 
     /**

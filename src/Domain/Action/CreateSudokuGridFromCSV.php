@@ -7,6 +7,10 @@ use Domain\Model\SudokuGrid;
 use Lib\CSVReader\CSVReader;
 use Lib\CSVReader\Exception\MalformedCSVException;
 
+/**
+ * Action that accepts a filepath to a CSV and converts it to a SudokuGrid.
+ * Throws exceptions if the 'puzzle' is not squared or completed with numbers 0-n.
+ */
 class CreateSudokuGridFromCSV
 {
     public function __construct(){}
@@ -20,17 +24,14 @@ class CreateSudokuGridFromCSV
                 throw new MalformedCSVException("CSV row does not contain the proper amount of columns");
             }
             foreach($row as $value) {
-                if ($value === null) {
-                    throw new InvalidSudokuException("WTF");
-                }
                 if (trim($value) === '') {
                     throw new InvalidSudokuException("Incomplete Puzzle");
                 }
                 if (!ctype_digit($value)) {
-                    throw new MalformedCSVException("CSV contains a non integer");
+                    throw new InvalidSudokuException("CSV contains a non integer");
                 }
                 if ((int) $value > $totalRows || (int) $value <= 0) {
-                    throw new MalformedCSVException("CSV contains an integer that is out of bounds!");
+                    throw new InvalidSudokuException("CSV contains an integer that is out of bounds!");
                 }
             }
         }
